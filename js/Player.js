@@ -16,10 +16,13 @@ class Player {
     }
 
     move() {
-        this.y += this.vy / frameRate();
-        this.x += this.vx / frameRate();
+        // Remove division by frameRate()
+        this.y += this.vy;
+        this.x += this.vx;
         this.constrainPosition();
     }
+
+    
 
     constrainPosition() {
         this.y = constrain(this.y, 100, height - 150);
@@ -62,7 +65,9 @@ class Player {
     }
 
     handleKeyRelease() {
-        this.vx = 0;
-        this.vy = 0;
-    }
+        if (this.vx !== 0) {
+            this.vx *= 0.8;
+            this.vy *= 0.8;
+        }
+    };
 }
