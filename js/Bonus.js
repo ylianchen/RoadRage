@@ -13,11 +13,15 @@ class Bonus {
             assets.bonus.star1,
             assets.bonus.star2
         ];
+        this.onScreen = true;
     }
 
     update() {
         if (!this.isCollected) {
             this.y += this.speed;
+            if (this.y > height) {
+                this.onScreen = false;
+            }
         }
     }
 
@@ -29,10 +33,10 @@ class Bonus {
 
     checkCollection(player) {
         if (!this.isCollected &&
-            player.x >= this.x - 50 &&
-            player.x <= this.x + this.size &&
-            player.y >= this.y - 50 &&
-            player.y <= this.y + this.size) {
+            player.x - 25 >= this.x - 50 && // Adjust for center positioning
+            player.x - 25 <= this.x + this.size &&
+            player.y - 25 >= this.y - 50 &&
+            player.y - 25 <= this.y + this.size) {
             this.isCollected = true;
             this.applyEffect(player);
         }

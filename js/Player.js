@@ -2,6 +2,7 @@
 class Player {
     constructor(assetLoader) {
         this.assets = assetLoader.assets;
+        this.selectedCar = 0;
         this.reset();
     }
 
@@ -12,33 +13,29 @@ class Player {
         this.vy = 0;
         this.speed = 1;
         this.opacity = 255;
-        this.selectedCar = 0;
     }
 
     move() {
-        // Remove division by frameRate()
         this.y += this.vy;
         this.x += this.vx;
         this.constrainPosition();
     }
 
-    
-
     constrainPosition() {
         this.y = constrain(this.y, 100, height - 150);
-        this.x = constrain(this.x, 160, 520 - 50);
+        this.x = constrain(this.x, 160 + 25, 520 - 25); // Adjust boundary calculations
     }
-
     display() {
         push();
+        imageMode(CENTER); // Set image mode to center
         tint(255, this.opacity);
         const carImage = this.selectedCar === 0 ? this.assets.cars.player1 : this.assets.cars.player2;
-        image(carImage, this.x, this.y);
+        image(carImage, this.x + 25, this.y + 25); // Add half width/height to position at center
+        imageMode(CORNER); // Reset to default for other elements
         pop();
         
         this.drawTurbulence();
     }
-
     drawTurbulence() {
         const x = random(this.x, this.x + 50);
         const y1 = random(this.y, height);
@@ -69,5 +66,5 @@ class Player {
             this.vx *= 0.8;
             this.vy *= 0.8;
         }
-    };
+    }
 }

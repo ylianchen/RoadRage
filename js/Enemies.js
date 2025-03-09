@@ -1,52 +1,31 @@
 // js/classes/Enemies.js
-class Roadblock {
-    constructor(y, x, vy) {
-        this.posY = y;
-        this.posX = x;
-        this.VY = vy;
-        this.width = 100;
-        this.height = 30;
-        this.onScreen = false;
-    }
 
-    update() {
-        this.posY += this.VY;
-    }
-
-    display() {
-        rect(this.posX, this.posY, this.width, this.height);
-    }
-
-    isColliding(player) {
-        return (
-            player.x < this.posX + this.width &&
-            player.x + 50 > this.posX &&
-            player.y < this.posY + this.height &&
-            player.y + 50 > this.posY
-        );
-    }
-}
+// Removed Roadblock class entirely
 
 class Chaser {
     constructor(y, x, vx, vy, assets) {
         this.y = y;
         this.x = x;
         this.vx = vx;
-        this.vy = vy;
+        // Increased cop car speed by multiplying the default speed
+        this.vy = vy ? vy * 1.5 : CONFIG.GAME.GLOBAL_SPEED * 1.5;
         this.copImage = assets.cars.cop;
-        this.onScreen = false;
+        this.onScreen = true;
     }
 
     update(playerX) {
         this.y += this.vy;
         const dx = playerX - this.x;
-        this.x += dx * CONFIG.GAME.ENEMIES.EASING;
+        // Increased easing factor for more aggressive chasing
+        this.x += dx * (CONFIG.GAME.ENEMIES.EASING * 2); 
+        
+        if (this.y > height) {
+            this.onScreen = false;
+        }
     }
 
     display() {
-        if (!this.onScreen) {
-            image(this.copImage, this.x, this.y);
-        }
+        image(this.copImage, this.x, this.y);
     }
 
     isColliding(player) {

@@ -14,7 +14,7 @@ const CONFIG = {
         }
     },
     GAME: {
-        GLOBAL_SPEED: 0.5,
+        GLOBAL_SPEED: 0.25,
         BONUS: {
             SPAWN_CYCLE: 5000,
             EFFECT_DURATION: 7000

@@ -43,8 +43,8 @@ class AssetLoader {
         this.assets.title = this.loadImage(`${CONFIG.PATHS.IMAGES.TITLE}Title.png`);
 
         // Load animation frames
-        for (let i = 0; i < 68; i++) {
-            const frameNumber = (i + 1).toString().padStart(2, '0');
+        for (let i = 1; i <= 69; i++) {  // Changed to <= 69 to include frame 69
+            const frameNumber = i.toString().padStart(2, '0');  // Removed the +1 since we want to start at 01
             const framePath = `${CONFIG.PATHS.IMAGES.ANIMATIONS}stick${frameNumber}.jpg`;
             this.assets.animations.push(this.loadImage(framePath));
         }
